@@ -1,0 +1,172 @@
+name: Security Analysis
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run weekly security scans
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  codeql-analysis:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript', 'python' ]
+        # Add other languages as needed: 'cpp', 'csharp', 'go', 'java'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        queries: security-extended,security-and-quality
+
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v3
+      if: matrix.language == 'javascript' || matrix.language == 'python'
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
+
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v3
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+  secret-scan:
+    name: Secret Detection
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Run TruffleHog OSS
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: main
+        head: HEAD
+        extra_args: --debug --only-verified
+
+  semgrep-scan:
+    name: Semgrep SAST
+    runs-on: ubuntu-latest
+    
+    container:
+      image: returntocorp/semgrep
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Run Semgrep
+      run: |
+        semgrep \
+          --config=auto \
+          --sarif \
+          --output=semgrep.sarif \
+          .
+
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: semgrep.sarif
+      if: always()
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js (if package.json exists)
+      if: hashFiles('package.json') != ''
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies (if package.json exists)
+      if: hashFiles('package.json') != ''
+      run: npm ci
+
+    - name: Run npm audit (if package.json exists)
+      if: hashFiles('package.json') != ''
+      run: npm audit --audit-level moderate
+
+    - name: Setup Python (if requirements.txt exists)
+      if: hashFiles('requirements.txt') != '' || hashFiles('Pipfile') != ''
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install safety (if Python project)
+      if: hashFiles('requirements.txt') != '' || hashFiles('Pipfile') != ''
+      run: pip install safety
+
+    - name: Run safety check (if Python project)
+      if: hashFiles('requirements.txt') != '' || hashFiles('Pipfile') != ''
+      run: safety check
+
+  docker-security:
+    name: Docker Security Scan
+    runs-on: ubuntu-latest
+    if: hashFiles('Dockerfile') != '' || hashFiles('docker-compose.yml') != ''
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Run Trivy vulnerability scanner on Docker
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'config'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'docker-trivy-results.sarif'
+
+    - name: Upload Docker scan results
+      uses: github/codeql-action/upload-sarif@v3
+      if: always()
+      with:
+        sarif_file: 'docker-trivy-results.sarif'
