@@ -30,7 +30,7 @@ const page = () => {
         <section className="w-full h-auto flex flex-col justify-start items-center gap-6 py-10 ">
             <ResourcesCard img='/r1.png' title={'Podcast'} dl1={'Live Expert Session at'} dl2={'Bharat Storytellers'} />
             <ResourcesCard img='/r2.png' title={'Learning'} dl1={'Learning Resources to improve '} dl2={'your communication skill'}/>
-            <ResourcesCard img='/r3.png' title={'Notes and PDF'} dl1={'Notes and Resources to'} dl2={'Help you prepare for your speech'}/>
+            <ResourcesCard img='/r3.png' title={'Notes, PDF'} dl1={'Notes and Resources to'} dl2={'Help you prepare for your speech'}/>
         </section>
 
       </main>

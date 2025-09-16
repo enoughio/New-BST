@@ -25,8 +25,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${spaceGrotesk.variable} ${syne.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${syne.variable} antialiased `}
       >
+      {/* <nav className="mx-auto w-[90vw] max-w-[1400px] h-15 bg-amber-200">this is nav</nav> */}
         {children}
       </body>
     </html>

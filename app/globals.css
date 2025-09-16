@@ -15,8 +15,6 @@
   --font-syne: var(--syne);
 }
 
-
-
 .card-shadow {
   position: relative;
   z-index: 1;
@@ -49,3 +47,6 @@
     padding: 0rem 1rem 0rem 1rem;
   }
 }
+
+
+
