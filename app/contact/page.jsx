@@ -1,11 +1,11 @@
+import ContactForm from "@/components/ContactForm";
 import Image from "next/image";
 import React from "react";
 
 const Contact = () => {
   return (
     <div className="bg-[#f2f2f2] max-w-screen text-black section">
-      <nav className="w-full h-[10vh] bg-blue-300 text-center">This is Nav</nav>
-
+  
       <section className="md:mx-[5rem] my-4 ">
         <header>
           <div className="flex justify-center items-center font-space-grotesk gap-4 ">
@@ -18,7 +18,7 @@ const Contact = () => {
           {/*mobile image */}
           <div className=" flex md:hidden w-full md:max-w-[70vw] max-h-[53vh] md:h-[44vw] md:w-[35vw]  ">
             <img
-              src={"/image.png"}
+              src={"/contactimage.png"}
               alt="Contact Image"
               // width={450}
               // height={720}
@@ -28,7 +28,7 @@ const Contact = () => {
           </div>
 
           {/* form */}
-          <div className="relative  p-8 rounded-[2rem] shadow-xl  bg-[#F7F7F7]  border min-h-fit sm:max-w-[70vw] md:h-[40vw] md:w-[33vw]">
+          <div className="relative  p-8 rounded-[2rem] shadow-xl  bg-[#F7F7F7]  border border-r-8 border-b-8 min-h-fit sm:max-w-[70vw] md:h-[40vw] md:w-[33vw]">
             <h2 className="text-xl font-semibold text-gray-900 mb-2">
               GET IN TOUCH
             </h2>
@@ -37,43 +37,14 @@ const Contact = () => {
               details.
             </p>
 
-            <form className="flex flex-col gap-8 ">
-              <div className="space-y-3">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="w-full border-b border-gray-400 focus:outline-none focus:border-black py-1 bg-transparent placeholder-gray-400"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full border-b border-gray-400 focus:outline-none focus:border-black py-1 bg-transparent placeholder-gray-400"
-                />
-                <input
-                  type="text"
-                  placeholder="Subject"
-                  className="w-full border-b border-gray-400 focus:outline-none focus:border-black py-1 bg-transparent placeholder-gray-400"
-                />
-              </div>
-              <textarea
-                placeholder="Message"
-                rows="1"
-                className="w-full border-b border-gray-400 focus:outline-none focus:border-black py-1 bg-transparent placeholder-gray-400 resize-none"
-              ></textarea>
+            <ContactForm />
 
-              <button
-                type="submit"
-                className=" bg-blue-900 text-white font-medium rounded-full px-6 py-3 w-fit hover:bg-blue-800 transition"
-              >
-                Send message
-              </button>
-            </form>
           </div>
 
-          {/* desktop image */}
+          {/* desktop contactimage */}
           <div className=" hidden md:flex max-w-[60vw] max-h-[60vh] md:h-[44vw] md:w-[35vw]  ">
             <img
-              src={"/image.png"}
+              src={"/contactimage.png"}
               alt="Contact Image"
               // width={450}
               // height={720}
