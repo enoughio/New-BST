@@ -32,3 +32,20 @@
   background: #0000005a;
   z-index: -1;
 }
+
+
+.section{
+  padding: 1rem 3rem 0rem 3rem;
+}
+
+@media (max-width: 768px) {
+  .section{
+    padding: 1rem 1rem 0rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section{
+    padding: 0rem 1rem 0rem 1rem;
+  }
+}
