@@ -1,26 +1,112 @@
 @import "tailwindcss";
 
+
+/* define colors */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --background-secondary: #000000; 
+  --forground: #292A32;
+  --primary: #0C098C;
+  --secondary: #D73037;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-space-grotesk: var(--space-grotesk);
+  --font-syne: var(--syne);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.card-shadow {
+  position: relative;
+  z-index: 1;
+}
+.card-shadow::after {
+  content: "";
+  position: absolute;
+  top: 16px; /* vertical offset for shadow */
+  left: 16px; /* horizontal offset for shadow */
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  background: #0000005a;
+  z-index: -1;
+}
+
+
+.section{
+  padding: 1rem 3rem 0rem 3rem;
+}
+
+@media (max-width: 768px) {
+  .section{
+    padding: 1rem 1rem 0rem 1rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (max-width: 480px) {
+  .section{
+    padding: 0rem 1rem 0rem 1rem;
+  }
 }
+
+
+
+.grid-container {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-areas: 
+        "box1 box1 box1 box1 box3 box3 box3"
+        "box2 box2 box2 box2 box3 box3 box3";
+
+ 
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .box1 { grid-area: box1; background-color: var(--primary); min-height: 50%; width: 100%; }
+    .box2 { grid-area: box2; background-color: white; min-height: 50%; width: 100%; }
+    .box3 { grid-area: box3; background-color: var(--secondary); height: auto; width: 100%; }
+
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+          "box3"
+          "box1"
+          "box2";
+      }
+      .box1, .box2, .box3 { height: auto; width: 100%; }
+    }
+    
+
+
+
+        .layout-container {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-areas: 
+        "green green red red red red"
+        "brown brown brown brown purple purple";
+      grid-template-rows: 1fr 1fr;
+      gap: 20px;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 400px;
+    }
+
+    .green { grid-area: green;  }
+    .red { grid-area: red; }
+    .purple { grid-area: purple;   }
+    .brown { grid-area: brown;   }
+
+
+    @media (max-width: 768px) {
+      .layout-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas: 
+          "red red"
+          "green purple"
+          "brown brown";
+        grid-template-rows: auto auto auto;
+      }
+    }

@@ -1,14 +1,19 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, Syne } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--space-grotesk",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", '300'],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const syne = Syne({
+  variable: "--syne",
+  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata = {
@@ -20,8 +25,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${syne.variable} antialiased `}
       >
+      {/* <nav className="mx-auto w-[90vw] max-w-[1400px] h-15 bg-amber-200">this is nav</nav> */}
         {children}
       </body>
     </html>
