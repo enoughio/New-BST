@@ -3,8 +3,8 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <main className="h-screen max-w-[100vw]  relative pt-17 pl-20  font-space-grotesk">
-      <header className="text-6xl font-bold md:w-full ">
+    <main className="h-screen max-w-[100vw]  relative pt-17  px-6   font-space-grotesk">
+      <header className="text-5xl lg:text-6xl font-bold md:w-full ">
         <h1>We help you become everyone's favorite speaker!</h1>
       </header>
 
@@ -19,7 +19,7 @@ const Hero = () => {
           </p>
         </div>
 
-        <div className="absolute bottom-0 right-0 ">
+        <div className="absolute md:bottom-0 md:right-0 ">
           <Image
             src={"/home/herolg.png"}
             alt="Many young people moaving towards a goal representing community growth"
@@ -35,7 +35,6 @@ const Hero = () => {
         <button className="max-w-[350px] w-[270px] rounded-xl bg-[var(--forground)] py-3.5">Explore Programs </button>
         <button className="max-w-[350px] w-[270px] rounded-xl bg-[var(--primary)] py-3.5">Become a Member</button>
       </div>
-
     </main>
   );
 };

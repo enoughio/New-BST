@@ -50,3 +50,63 @@
 
 
 
+.grid-container {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-areas: 
+        "box1 box1 box1 box1 box3 box3 box3"
+        "box2 box2 box2 box2 box3 box3 box3";
+
+ 
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .box1 { grid-area: box1; background-color: var(--primary); min-height: 50%; width: 100%; }
+    .box2 { grid-area: box2; background-color: white; min-height: 50%; width: 100%; }
+    .box3 { grid-area: box3; background-color: var(--secondary); height: auto; width: 100%; }
+
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+          "box3"
+          "box1"
+          "box2";
+      }
+      .box1, .box2, .box3 { height: auto; width: 100%; }
+    }
+    
+
+
+
+        .layout-container {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-areas: 
+        "green green red red red red"
+        "brown brown brown brown purple purple";
+      grid-template-rows: 1fr 1fr;
+      gap: 20px;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 400px;
+    }
+
+    .green { grid-area: green;  }
+    .red { grid-area: red; }
+    .purple { grid-area: purple;   }
+    .brown { grid-area: brown;   }
+
+
+    @media (max-width: 768px) {
+      .layout-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas: 
+          "red red"
+          "green purple"
+          "brown brown";
+        grid-template-rows: auto auto auto;
+      }
+    }
