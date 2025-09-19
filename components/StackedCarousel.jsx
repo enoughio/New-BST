@@ -2,17 +2,18 @@
 import Image from "next/image";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-/*
-  StackedCarousel
-  - Auto-fading stacked cards effect
-  - Top slide fades to reveal the next slide underneath
-  - Optional prev/next controls
-
-  Props:
-    - slides: Array<{ image: string, title?: string, date?: string, time?: string, location?: string, badge?: string }>
-    - heightClass: Tailwind height classes for the carousel area
-    - intervalMs: number (autoplay interval)
-*/
+/**
+ * StackedCarousel — auto-playing stacked/fading carousel with optional prev/next controls.
+ *
+ * Renders a layered stack of slides where the top card fades/up-animates to reveal the next.
+ * Autoplays every `intervalMs` milliseconds and pauses while the mouse is over the component.
+ * If `slides` is empty or not provided, a built-in set of three default slides is used.
+ *
+ * @param {Object[]} slides - Array of slide objects with shape { image: string, title?: string, date?: string, time?: string, location?: string, badge?: string }.
+ * @param {string} [heightClass="h-[55vh] md:h-[65vh] lg:h-[75vh]"] - Tailwind height utility classes applied to the carousel area.
+ * @param {number} [intervalMs=4000] - Autoplay interval in milliseconds.
+ * @returns {JSX.Element} The rendered carousel component.
+ */
 export default function StackedCarousel({
   slides,
   heightClass = "h-[55vh] md:h-[65vh] lg:h-[75vh]",
